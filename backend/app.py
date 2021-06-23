@@ -8,6 +8,7 @@ from backend.db import db
 from backend.schema import ma
 from dotenv import load_dotenv
 from backend.resources.user import UserRegister, UserLogin, User, UserLogout
+from backend.resources.forms import UploadForm
 
 app = Flask(__name__)
 load_dotenv()
@@ -40,6 +41,7 @@ api.add_resource(UserRegister, "/register")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
+api.add_resource(UploadForm,"/upload")
 
 if __name__ == "__main__":
     db.init_app(app)
