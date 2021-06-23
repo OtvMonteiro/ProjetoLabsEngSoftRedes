@@ -1,5 +1,5 @@
-from schema import ma
-from models.user import UserModel
+from backend.schema import ma
+from backend.models.user import UserModel
 
 
 class UserSchema(ma.SQLAlchemyAutoSchema):

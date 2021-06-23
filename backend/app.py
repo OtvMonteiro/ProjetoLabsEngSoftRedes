@@ -4,10 +4,10 @@ from flask_jwt_extended import JWTManager
 from marshmallow import ValidationError
 from flask_cors import CORS
 import os
-from db import db
-from schema import ma
+from backend.db import db
+from backend.schema import ma
 from dotenv import load_dotenv
-from resources.user import UserRegister, UserLogin, User, UserLogout
+from backend.resources.user import UserRegister, UserLogin, User, UserLogout
 
 app = Flask(__name__)
 load_dotenv()

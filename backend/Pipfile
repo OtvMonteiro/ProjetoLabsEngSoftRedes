@@ -21,7 +21,7 @@ colorama = "*"
 black = "*"
 
 [requires]
-python_version = "3.8.8"
+python_version = "3.9.1"
 
 [pipenv]
 allow_prereleases = true
