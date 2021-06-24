@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
+import Layout from '../components/layout/Layout'
+import { getAppCookies, verifyToken } from '../utilities/util'
+import Image from 'next/image'
 
 export default function UploadImage() {
     const [stateUploadImage,setstateUploadImage] = useState({
@@ -46,11 +50,30 @@ export default function UploadImage() {
     }
     
     return (
-        <div>
-            <input type="file" onChange={onSelectFile} multiple></input>
-            <button type="submit" onClick={onUploadHandler}>Enviar</button>
-        </div>
         
+        <Layout title="Envio de Imagem">
+      <div className="container">
+        <main>
+          Selecione a imagem do formulário que deseja enviar:
+          <br></br><br></br>
+        {/* <img id="uploadPreview" style="width: 100px; height: 100px;" src="/logo.jpg"/> */}
+        <Image
+        id='uploadPreview'
+        className="flex"
+        src="/upload-document.png"
+        alt="Upload logo"
+        width="256"
+        height="256"
+        /> 
+        {/* <input id="uploadImage" type="file" name="myPhoto" /> */}
+        <div>
+            <input className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="file" onChange={onSelectFile} multiple></input>
+            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="submit" onClick={onUploadHandler}>Enviar</button>
+        </div>
+
+        </main>
+      </div>
+    </Layout>
         // <form onSubmit={onUploadHandler} method="POST">
         //     <label htmlFor="imageFiles"></label>            
         //     <input type="file" onChange={onSelectFile} multiple></input>
@@ -58,3 +81,4 @@ export default function UploadImage() {
         // </form>
     )
 }
+        
