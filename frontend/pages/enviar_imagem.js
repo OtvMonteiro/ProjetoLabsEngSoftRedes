@@ -4,19 +4,38 @@ import Layout from '../components/layout/Layout'
 import { getAppCookies, verifyToken } from '../utilities/util'
 import Image from 'next/image'
 
-function PreviewImage() {
-  var oFReader = new FileReader();
-  if (document.getElementById("uploadImage").files[0]){
-  oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+// function PreviewImage() {
+//   var oFReader = new FileReader();
+//   if (document.getElementById("uploadImage").files[0]){
+//   oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
   
-  oFReader.onload = function (oFREvent) {
-      document.getElementById("uploadPreview").src = oFREvent.target.result;
-  };}
+//   oFReader.onload = function (oFREvent) {
+//       document.getElementById("uploadPreview").src = oFREvent.target.result;
+//   };}
+// };
+
+const [image, setImage] = useState(null);
+
+const uploadToClient = (event) => {
+  if (event.target.files && event.target.files[0]) {
+    const i = event.target.files[0];
+
+    setImage(i);
+    setCreateObjectURL(URL.createObjectURL(i));
+  }
 };
 
-
+const uploadToServer = async (event) => {
+  const body = new FormData();
+  body.append("file", image);
+  const response = await fetch("/api/file", {
+    method: "POST",
+    body
+  });
+};
 
 const EnviarImagem = () => {
+
 
   return (
     <Layout title="Envio de Imagem">
@@ -38,8 +57,17 @@ const EnviarImagem = () => {
           id='uploadImage'
           className="w-full p-2 mb-6 text-red-700 border-b-2 border-red-500 outline-none focus:bg-gray-100"
           type="file"
-          onChange={PreviewImage}
+          // onChange={PreviewImage}
+          onChange={uploadToClient}
         ></input>
+
+        <button
+          type="submit"
+          onClick={uploadToServer}
+        >
+          Upload
+        </button>
+
         </main>
       </div>
     </Layout>

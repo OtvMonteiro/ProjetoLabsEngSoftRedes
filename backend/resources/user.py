@@ -9,8 +9,8 @@ from flask_jwt_extended import (
     jwt_required,
 )
 import bcrypt
-from backend.models.user import UserModel
-from backend.schemas.user import UserSchema
+from models.user import UserModel
+from schemas.user import UserSchema
 
 # Mensagens pré-definidas
 USER_ALREADY_EXISTS = "Um usuário com esse login já existe."
