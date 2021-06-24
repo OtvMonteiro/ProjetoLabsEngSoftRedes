@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 const LoginEnviarImagemBtn = () => {
   const redirectToEnviarImagemPage = () => {
-    Router.push('/enviar_imagem') //redireciona para a tela de Enviar Imagem.
+    Router.push('/image_upload') //redireciona para a tela de Enviar Imagem.
   }
   return (
     <button

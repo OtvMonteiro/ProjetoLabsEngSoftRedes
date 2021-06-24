@@ -6,23 +6,25 @@ export default function UploadImage() {
         selectedFile: null
     })
 
-    let formdata = new FormData()
+    // let formdata = new FormData()
     
-    var imagefile
 
     const onSelectFile = event => {
         console.log("corrected inputed image files");
-        console.log(event.target.files);
-        setstateUploadImage({selectedFile: event.target.files})
-        formdata.append('imagem', event.target.files)
-        imagefile = event.target.files
+        console.log(event.target.files[0]);
+        setstateUploadImage({selectedFile: event.target.files[0]})
+        // formdata.append('imagem', event.target.files)
     }
 
     const onUploadHandler = async event => {
         console.log("upload image files");
+        console.log(stateUploadImage['selectedFile'])
 
-        // let formdata = new FormData()
-        // formdata.append('imagem', stateUploadImage)
+        var formdata = new FormData();
+        formdata.append('imagem', stateUploadImage['selectedFile']);
+        // formdata.append('cris', 'gistavo');
+        // console.log('asdasd')
+        console.log(formdata);
 
         // axios({
         //     url: '/upload',
@@ -33,14 +35,13 @@ export default function UploadImage() {
         //     data: 'hello world'
         // })
         
-        axios.post('http://localhost:5000/api/upload', {
-            // data: formdata
-            imagem: imagefile
-        }).then((response) => {
-            console.log(response);
-          }, (error) => {
-            console.log(error);
-          });
+        // formdata.append("fileimage", imagefile.files[0]);
+
+        axios.post("http://localhost:5000/api/upload", formdata, {
+        headers: {
+        "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
+        }
+        }).then(response => console.log(response));
 
     }
     
