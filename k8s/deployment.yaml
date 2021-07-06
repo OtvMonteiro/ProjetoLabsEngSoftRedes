@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pcs3443
+  name: projetolabsengsoftredes
 spec:
   selector:
     matchLabels:
-      app: pcs3443
+      app: projetolabsengsoftredes
   replicas: 1
   template:
     metadata:
       labels:
-        app: pcs3443
+        app: projetolabsengsoftredes
     spec:
       containers:
-      - name: pcs3443
-        image: okteto.dev/pcs3443-backend:latest
+      - name: projetolabsengsoftredes
+        image: okteto.dev/projetolabsengsoftredes:latest
         ports:
         - containerPort: 5000
