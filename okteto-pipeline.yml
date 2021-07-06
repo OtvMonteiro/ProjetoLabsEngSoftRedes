@@ -1,3 +1,4 @@
 deploy:
   - okteto build -t okteto.dev/otvmonteiro:projetolabsengsoftredes ./backend
   - kubectl apply -f k8s
+  - okteto build -t okteto.dev/frontend:${OKTETO_GIT_COMMIT} frontend
