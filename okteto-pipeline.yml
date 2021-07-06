@@ -1,3 +1,3 @@
 deploy:
-  - okteto build -t okteto.dev/pcs3443-backend:latest ./backend
+  - okteto build -t okteto.dev/otvmonteiro:projetolabsengsoftredes ./backend
   - kubectl apply -f k8s
