@@ -7,7 +7,7 @@ services:
         restart: always
         environment: 
            SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://okteto:okteto@postgresql.otvmonteiro.svc.cluster.local/pcs3443?client_encoding=utf8
-           JWT_SECRET_KEY: segredo
+           JWT_SECRET_KEY: okteto
     backend:
         build: ./frontend
         ports: 
