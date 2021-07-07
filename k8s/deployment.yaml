@@ -13,7 +13,11 @@ spec:
         app: projetolabsengsoftredes
     spec:
       containers:
-      - name: projetolabsengsoftredes
-        image: okteto.dev/projetolabsengsoftredes/backend
+      - name: backend
+        image: okteto.dev/otvmonteiro:projetolabsengsoftredes:backend
         ports:
         - containerPort: 5000
+      - name: frontend
+        image: okteto.dev/otvmonteiro:projetolabsengsoftredes:frontend
+        ports:
+        - containerPort: 3000
