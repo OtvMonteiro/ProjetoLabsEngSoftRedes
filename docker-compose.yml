@@ -5,9 +5,9 @@ services:
         ports: 
             - "5000:5000"
         restart: always
-        #environment: 
-        #    SQLALCHEMY_DATABASE_URI: sqlite:///data.db
-        #    JWT_SECRET_KEY: segredo
+        environment: 
+           SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://okteto:okteto@postgresql.otvmonteiro.svc.cluster.local/pcs3443?client_encoding=utf8
+           JWT_SECRET_KEY: segredo
     backend:
         build: ./frontend
         ports: 
