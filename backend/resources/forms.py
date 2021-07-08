@@ -16,7 +16,7 @@ class UploadForm(Resource):
         imagem = request.files['imagem']
         imagem.seek(0)
         # file.save(os.path.join(UPLOAD_DIR, file.filename))
-        connection = sqlite3.connect(r'F:\Poli\2021.1\PCS3443\ProjetoLabSoftware\ProjetoLabsEngSoftRedes\backend\data.db')
+        connection = sqlite3.connect(r'C:\Users\migue\ws-labengsoft\projeto\ProjetoLabsEngSoftRedes\backend\data.db')
         connection.execute("""INSERT INTO images ("image_data") values (?)""", [sqlite3.Binary(imagem.read())])
         connection.commit()
         print('sucesso')
