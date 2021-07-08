@@ -17,7 +17,3 @@ spec:
         image: okteto.dev/projetolabsengsoftredes-backend:latest
         ports:
         - containerPort: 5000
-      - name: frontend
-        image: okteto.dev/projetolabsengsoftredes-frontend:latest
-        ports:
-        - containerPort: 3000

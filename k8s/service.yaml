@@ -7,7 +7,5 @@ spec:
   ports:
     - name: http
       port: 5000
-    - name: front
-      port: 3000
   selector:
     app: projetolabsengsoftredes

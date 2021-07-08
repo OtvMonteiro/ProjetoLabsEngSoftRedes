@@ -1,0 +1,93 @@
+$Env:KUBECONFIG=("$HOME\Downloads\okteto-kube.config;$Env:KUBECONFIG;$HOME\.kube\config")
+
+
+DEVELOP No Okteto
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> docker ps
+m cannot find the file specified.
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> docker ps
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   39h
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> $Env:KUBECONFIG=("$HOME\Downloads\okteto-kube.config;$Env:KUBECONFIG;$HOME\.kube\config")     
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   39h
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+Unable to connect to the server: dial tcp 127.0.0.1:6443: connectex: No connection could be made because the target machine actively refused it.     
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> okteto login
+Authentication will continue in your default browser
+You can also open a browser and navigate to the following address:
+https://cloud.okteto.com/auth/authorization-code?redirect=http%3A%2F%2F127.0.0.1%3A56545%2Fauthorization-code%2Fcallback%3Fstate%3DhqWaYEZm1cTRVXep2uYKDhdxX2umATsq5JCFsA4e5Xk%3D&state=hqWaYEZm1cTRVXep2uYKDhdxX2umATsq5JCFsA4e5Xk%3D
+ +  Logged in as OtvMonteiro
+    Run `okteto namespace` to switch your context and download your Kubernetes credentials.
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> okteto namespace
+ +  Updated context 'cloud_okteto_com' in 'C:\Users\Otv\Downloads\okteto-kube.config'
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> okteto build -t okteto.dev/projetolabsengsoftredes-backend:latest ./backend
+ i  Running your build in tcp://buildkit.cloud.okteto.net:1234...
+[+] Building 67.3s (15/15) FINISHED
+ => [internal] load build definition from buildkit-636209239                                                                                    0.8s 
+ => => transferring dockerfile: 787B                                                                                                            0.6s 
+ => [internal] load .dockerignore                                                                                                               0.7s 
+ => => transferring context: 130B                                                                                                               0.6s 
+ => [internal] load metadata for docker.io/library/python:3.8.8                                                                                 4.9s 
+ => [internal] load build context                                                                                                               1.7s 
+ => => transferring context: 592.33kB                                                                                                           1.6s 
+ => CACHED [base 1/1] FROM docker.io/library/python:3.8.8@sha256:e84c219fe873ab169551469f32b57facf7d7baded941ccf0cbcc54e4aefa6e80               0.0s 
+ => => resolve docker.io/library/python:3.8.8@sha256:e84c219fe873ab169551469f32b57facf7d7baded941ccf0cbcc54e4aefa6e80                           0.1s 
+ => CACHED [python-deps 1/5] RUN pip install pipenv                                                                                             0.0s 
+ => CACHED [python-deps 2/5] RUN apt-get update && apt-get install -y --no-install-recommends gcc                                               0.0s
+ => [python-deps 3/5] COPY Pipfile .                                                                                                            0.2s 
+ => [python-deps 4/5] COPY Pipfile.lock .                                                                                                       0.2s 
+ => [python-deps 5/5] RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy                                                                     39.8s 
+ => [runtime 1/4] COPY --from=python-deps /.venv /.venv                                                                                         0.7s 
+ => [runtime 3/4] WORKDIR /home/app                                                                                                             0.3s 
+ => [runtime 4/4] COPY . .                                                                                                                      0.3s 
+ => => exporting layers                                                                                                                        13.8s 
+ => => exporting manifest sha256:2649674ae7b5986c42a2c0ad7a735731b1f540b3cbebc5bc3470b40d11af1d71                                               0.1s 
+ => => exporting config sha256:c005fabfb61f07093582e92c33124ae8b4521b2412bcb6727c1f0f6b6254e418                                                 0.1s 
+ => => pushing layers                                                                                                                           1.5s 
+ => => pushing manifest for registry.cloud.okteto.net/otvmonteiro/projetolabsengsoftredes-backend:latest                                        0.7s 
+ +  Image 'okteto.dev/projetolabsengsoftredes-backend:latest' successfully pushed
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> kubectl.exe ^C
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> kubectl apply -f k8s
+deployment.apps/projetolabsengsoftredes created
+service/projetolabsengsoftredes created
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> okteto build -t okteto.dev/projetolabsengsoftredes-backend:latest ./backend
+ i  Running your build in tcp://buildkit.cloud.okteto.net:1234...
+[+] Building 11.4s (15/15) FINISHED
+ => [internal] load build definition from buildkit-570921471                                                                                    0.5s 
+ => => transferring dockerfile: 787B                                                                                                            0.5s 
+ => [internal] load .dockerignore                                                                                                               0.4s 
+ => => transferring context: 34B                                                                                                                0.3s 
+ => [internal] load metadata for docker.io/library/python:3.8.8                                                                                 4.4s 
+ => [base 1/1] FROM docker.io/library/python:3.8.8@sha256:e84c219fe873ab169551469f32b57facf7d7baded941ccf0cbcc54e4aefa6e80                      0.1s 
+ => => resolve docker.io/library/python:3.8.8@sha256:e84c219fe873ab169551469f32b57facf7d7baded941ccf0cbcc54e4aefa6e80                           0.1s 
+ => [internal] load build context                                                                                                               0.6s 
+ => => transferring context: 1.25kB                                                                                                             0.5s 
+ => CACHED [python-deps 1/5] RUN pip install pipenv                                                                                             0.0s 
+ => CACHED [python-deps 2/5] RUN apt-get update && apt-get install -y --no-install-recommends gcc                                               0.0s 
+ => CACHED [python-deps 3/5] COPY Pipfile .                                                                                                     0.0s 
+ => CACHED [python-deps 4/5] COPY Pipfile.lock .                                                                                                0.0s
+ => CACHED [python-deps 5/5] RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy                                                               0.0s 
+ => CACHED [runtime 2/4] RUN useradd --create-home appuser                                                                                      0.0s 
+ => CACHED [runtime 3/4] WORKDIR /home/app                                                                                                      0.0s 
+ => [runtime 4/4] COPY . .                                                                                                                      0.2s 
+ => exporting to image                                                                                                                          5.4s 
+ => => exporting layers                                                                                                                         3.4s 
+ => => exporting manifest sha256:8ee266a3df7109262b87143f3fe210eca0ddcd8ba0caeb58e8cfd8a6270c80ff                                               0.1s 
+ => => exporting config sha256:600ae7ce9cbb182fb0bea62092452792b9472f94570a8965bc512a5fa2adbdc2                                                 0.1s 
+ => => pushing layers                                                                                                                           1.1s 
+ => => pushing manifest for registry.cloud.okteto.net/otvmonteiro/projetolabsengsoftredes-backend:latest                                        0.6s 
+ +  Image 'okteto.dev/projetolabsengsoftredes-backend:latest' successfully pushed
+PS A:\Documents\GitHub\ProjetoLabsEngSoftRedes - Main> kubectl port-forward --namespace otvmonteiro svc/postgresql 5432:5432
+Forwarding from 127.0.0.1:5432 -> 5432
+Forwarding from [::1]:5432 -> 5432

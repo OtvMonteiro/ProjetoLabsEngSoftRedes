@@ -1,4 +1,3 @@
 deploy:
   - okteto build -t okteto.dev/projetolabsengsoftredes-backend:latest ./backend
-  - okteto build -t okteto.dev/projetolabsengsoftredes-frontend:latest ./frontend
   - kubectl apply -f k8s

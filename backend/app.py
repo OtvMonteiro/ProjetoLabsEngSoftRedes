@@ -1,3 +1,4 @@
+from backend.resources.forms import FormsModel
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -8,7 +9,7 @@ from db import db
 from schema import ma
 from dotenv import load_dotenv
 from resources.user import UserRegister, UserLogin, User, UserLogout
-from resources.forms import UploadForm
+from resources.forms import FormsModel #, UploadForm
 
 
 app = Flask(__name__)
@@ -42,8 +43,8 @@ api.add_resource(UserRegister, "/register")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
-api.add_resource(UploadForm,"/api/upload")
-
+#api.add_resource(UploadForm,"/api/upload")
+api.add_resource(FormsModel,"/api/upload")
 
 if __name__ == "__main__":
     db.init_app(app)
