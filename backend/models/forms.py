@@ -3,7 +3,7 @@ from db import db
 class FormsModel(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True)
-    image_data = db.Column(db.BLOB, nullable=False, unique=True)
+    image_data = db.Column(db.LargeBinary, nullable=False)
 
     def save_to_db(self) -> None:
         db.session.add(self)

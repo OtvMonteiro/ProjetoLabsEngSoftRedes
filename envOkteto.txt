@@ -1,6 +1,13 @@
 $Env:KUBECONFIG=("$HOME\Downloads\okteto-kube.config;$Env:KUBECONFIG;$HOME\.kube\config")
 
 
+Frontend está enviando corretamente a image?
+Backend esta pegando e processando corretamente a imagem?
+Backend está enviando corretamente para a base da dados?
+
+
+
+
 DEVELOP No Okteto
 
 Windows PowerShell
