@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles()
   const [inputFields, setInputFields] = useState([
+    { id: uuidv4(), nomeCampo: 'Nome' },
+    { id: uuidv4(), nomeCampo: 'CPF' },
+    { id: uuidv4(), nomeCampo: 'RG' },
     { id: uuidv4(), nomeCampo: '' },
   ]);
 
@@ -63,7 +66,7 @@ function App() {
 
   return (
     <Container>
-      <h1>Criar Formulário</h1>
+      <h1 fontSize="large">Criar Formulário</h1>
       <form className={classes.root} onSubmit={handleSubmit}>
         { inputFields.map(inputField => (
           <div key={inputField.id}>
@@ -74,10 +77,10 @@ function App() {
               value={inputField.nomeCampo}
               onChange={event => handleChangeInput(inputField.id, event)}
             />
-            <IconButton disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
+            <IconButton disabled={inputFields.length === 4} onClick={() => handleRemoveFields(inputField.id)}>
               <RemoveIcon />
             </IconButton>
-            <IconButton
+            <IconButton disabled={inputFields.length === 5}
               onClick={handleAddFields}
             >
               <AddIcon />
