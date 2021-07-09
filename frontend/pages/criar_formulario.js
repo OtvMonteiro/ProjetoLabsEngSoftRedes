@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 //import Link from 'next/link'
 //import LayoutCriarFormulario from '../components/layout/LayoutCriarFormulario'
 //import { getAppCookies, verifyToken } from '../utilities/util'
@@ -37,6 +38,28 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("InputFields", inputFields);
+    // console.log("InputFields", inputFields.pop());
+    // console.log(inputFields[0]);
+    
+    for (let i=0; i<inputFields.length; i++){
+      console.log(inputFields[i].nomeCampo);
+    }
+
+    let camposJSON = JSON.stringify(inputFields);
+    console.log(camposJSON);
+
+    axios.post("http://localhost:5000/api/create_form", {
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      // data: {
+      //   'Campo': 'nome do campo'
+      // }
+
+      // inputFields
+      camposJSON
+    }).then(response => console.log(response));
+
   };
 
   const handleChangeInput = (id, event) => {
@@ -66,7 +89,7 @@ function App() {
 
   return (
     <Container>
-      <h1 fontSize="large">Criar Formulário</h1>
+      <h1>Criar Formulário</h1>
       <form className={classes.root} onSubmit={handleSubmit}>
         { inputFields.map(inputField => (
           <div key={inputField.id}>
