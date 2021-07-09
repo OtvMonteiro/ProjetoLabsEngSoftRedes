@@ -98,38 +98,45 @@ function App() {
 
   return (
     <Container>
-      <Typography variant="h5" component="h2">
-        Criar formulário
-      </Typography>
-      <form className={classes.root} onSubmit={handleSubmit}>
-        { inputFields.map(inputField => (
-          <div key={inputField.id}>
-            <TextField
-              name="nomeCampo"
-              label="Nome do Campo"
-              variant="filled"
-              value={inputField.nomeCampo}
-              onChange={event => handleChangeInput(inputField.id, event)}
-            />
-            <IconButton disabled={inputFields.length === 4} onClick={() => handleRemoveFields(inputField.id)}>
-              <RemoveIcon />
-            </IconButton>
-            <IconButton disabled={inputFields.length === 5}
-              onClick={handleAddFields}
-            >
-              <AddIcon />
-            </IconButton>
-          </div>
-        )) }
-        <Button
-          className={classes.button}
-          variant="contained" 
-          color="primary"
-          type="submit" 
-          startIcon={<PictureAsPdfIcon></PictureAsPdfIcon>}
-          onClick={handleSubmit}
-        >Gerar PDF</Button>
-      </form>
+      <center>
+        <Typography variant="h5" component="h2">
+          Criar formulário
+        </Typography>
+        <Typography variant="h7" component="h2">
+          <br></br>
+          Insira abaixo os campos que deseja presente em seu formulário de vacinação
+          <br></br><br></br>
+        </Typography>
+        <form className={classes.root} onSubmit={handleSubmit}>
+          { inputFields.map(inputField => (
+            <div key={inputField.id}>
+              <TextField
+                name="nomeCampo"
+                label="Nome do Campo"
+                variant="filled"
+                value={inputField.nomeCampo}
+                onChange={event => handleChangeInput(inputField.id, event)}
+              />
+              <IconButton disabled={inputFields.length === 4} onClick={() => handleRemoveFields(inputField.id)}>
+                <RemoveIcon />
+              </IconButton>
+              <IconButton disabled={inputFields.length === 5}
+                onClick={handleAddFields}
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
+          )) }
+          <Button
+            className={classes.button}
+            variant="contained" 
+            color="primary"
+            type="submit" 
+            startIcon={<PictureAsPdfIcon></PictureAsPdfIcon>}
+            onClick={handleSubmit}
+          >Gerar PDF</Button>
+        </form>
+      </center>
     </Container>
   );
 }
