@@ -4,6 +4,7 @@ import axios from 'axios'
 //import LayoutCriarFormulario from '../components/layout/LayoutCriarFormulario'
 //import { getAppCookies, verifyToken } from '../utilities/util'
 //import Image from 'next/image'
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -58,9 +59,19 @@ function App() {
 
       // inputFields
       camposJSON
-    }).then(response => window.open("data:application/pdf," + encodeURI(response.data), "_blanck"));
-    // }).then(response => window.open(response, "_blanck"));
-    // }).then(response => console.log(response));
+    }).then(response => {
+      //Create a Blob from the PDF Stream
+          const file = new Blob(
+            [response.data], 
+            {type: 'application/pdf'});
+      //Build a URL from the file
+          const fileURL = URL.createObjectURL(file);
+      //Open the URL on new Window
+          window.open(fileURL);
+      })
+      .catch(error => {
+          console.log(error);
+      });
 
   };
 
@@ -75,10 +86,6 @@ function App() {
     setInputFields(newInputFields);
   }
 
-  // const handleAddFields = () => {
-  //   setInputFields([...inputFields, { id: uuidv4(), nomeCampo: '' }])
-  // }
-
   const handleAddFields = () => {
     setInputFields([...inputFields, { id: uuidv4(), nomeCampo: '' }])
   }
@@ -91,7 +98,9 @@ function App() {
 
   return (
     <Container>
-      <h1>Criar Formulário</h1>
+      <Typography variant="h5" component="h2">
+        Criar formulário
+      </Typography>
       <form className={classes.root} onSubmit={handleSubmit}>
         { inputFields.map(inputField => (
           <div key={inputField.id}>
@@ -115,7 +124,7 @@ function App() {
         <Button
           className={classes.button}
           variant="contained" 
-          color="Primary"
+          color="primary"
           type="submit" 
           startIcon={<PictureAsPdfIcon></PictureAsPdfIcon>}
           onClick={handleSubmit}
