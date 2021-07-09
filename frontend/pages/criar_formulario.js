@@ -58,7 +58,9 @@ function App() {
 
       // inputFields
       camposJSON
-    }).then(response => console.log(response));
+    }).then(response => window.open("data:application/pdf," + encodeURI(response.data), "_blanck"));
+    // }).then(response => window.open(response, "_blanck"));
+    // }).then(response => console.log(response));
 
   };
 
