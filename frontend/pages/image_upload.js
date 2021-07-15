@@ -41,7 +41,7 @@ export default function UploadImage() {
         
         // formdata.append("fileimage", imagefile.files[0]);
 
-        axios.post(process.env.URL_API_BACKEND, formdata, {
+        axios.post(process.env.NEXT_PUBLIC_BASE_URL, formdata, {
         headers: {
         "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
         }
