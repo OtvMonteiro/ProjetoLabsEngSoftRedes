@@ -40,8 +40,8 @@ export default function UploadImage() {
         // })
         
         // formdata.append("fileimage", imagefile.files[0]);
-
-        axios.post(process.env.NEXT_PUBLIC_BASE_URL, formdata, {
+        const url=process.env.NEXT_PUBLIC_BASE_URL; console.log(url);
+        axios.post('/carregar', formdata, {
         headers: {
         "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
         }
