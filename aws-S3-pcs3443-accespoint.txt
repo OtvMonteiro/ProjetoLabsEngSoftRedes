@@ -1,0 +1,1 @@
+arn:aws:s3:us-east-1:358619447444:accesspoint/accespoint

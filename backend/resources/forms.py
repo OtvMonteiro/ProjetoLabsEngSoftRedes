@@ -1,14 +1,11 @@
-from sqlite3.dbapi2 import connect
+#from sqlite3.dbapi2 import connect
 from typing import BinaryIO
 from flask import request
 from flask_restful import Resource
-import werkzeug
-import os
-import sqlite3
+#from werkzeug import secure_filename
 from PIL import Image
 import io
-import db
-
+import os
 
 from models.forms import FormsModel
 from schemas.forms import FormsSchema
@@ -37,15 +34,17 @@ class UploadForm(Resource):
         else:
             imagem_PIL_resized.save(img_byte_arr, format='png')
         
-        #img_byte_arr = img_byte_arr.getvalue()
-        img_byte_arr = img_byte_arr.read()
+        img_byte_arr = img_byte_arr.getvalue()
+        #img_byte_arr = img_byte_arr.read()
 
         print(imagem_PIL)
         print(imagem_PIL_resized)
         print('sucesso')
 
         
-        dados = { 'image_data' : img_byte_arr } 
+        dados = { 'image_data' : str(img_byte_arr), 
+                    'digitado' : False
+        } 
         formulario = forms_schema.load(dados)
         formulario.save_to_db()
 
@@ -56,8 +55,34 @@ class UploadForm(Resource):
         # connection.execute("""INSERT INTO images ("image_data") values (?)""", [sqlite3.Binary(img_byte_arr)])
         # connection.commit()
         print('sucesso')
-        return {'hello': 'world'}
+        return dados
+#        return {'hello': 'world'}
 
+# def upload_aws():
+#     key = Auth.auth_user()
+#     bucket = 'profile-photos'
+#     content_type = request.mimetype
+#     imagem = request.files['file']
+#     imagem.seek(0)
+#     imagem_PIL = Image.open(imagem)
+#     image_file = imagem_PIL.resize((1656, 2339))
+
+
+
+#     client = boto3.client('s3',
+#                           region_name='sfo2',
+#                           endpoint_url='https://example.xxx.amazonaws.com',
+#                           aws_access_key_id=os.environ['AWS_ACCESS_KEY'],
+#                           aws_secret_access_key=os.environ['AWS_SECRET_KEY'])
+
+#     filename = secure_filename(image_file.filename)  # This is convenient to validate your filename, otherwise just use file.filename
+
+#     client.put_object(Body=image_file,
+#                       Bucket=bucket,
+#                       Key=filename,
+#                       ContentType=content_type)
+
+#     return custom_response({'message': 'image uploaded'}, 200)
 
 # class UploadForm(Resource):
 

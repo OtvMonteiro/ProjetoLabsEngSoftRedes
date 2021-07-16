@@ -3,7 +3,8 @@ from db import db
 class FormsModel(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True)
-    image_data = db.Column(db.Text, nullable=False)
+    image_data = db.Column(db.String, nullable=False)
+    digitado = db.Column(db.Boolean, nullable=False)
 #    image_data = db.Column(db.LargeBinary, nullable=False)
 
 
