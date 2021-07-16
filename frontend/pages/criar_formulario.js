@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import SaveAlt from '@material-ui/icons/SaveAlt';
 import { v4 as uuidv4 } from 'uuid';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,7 +34,7 @@ function App() {
     { id: uuidv4(), nomeCampo: 'Nome' },
     { id: uuidv4(), nomeCampo: 'CPF' },
     { id: uuidv4(), nomeCampo: 'RG' },
-    { id: uuidv4(), nomeCampo: '' },
+    //{ id: uuidv4(), nomeCampo: '' },
   ]);
 
   const handleSubmit = (e) => {
@@ -99,12 +100,15 @@ function App() {
   return (
     <Container>
       <center>
-        <Typography variant="h5" component="h2">
-          Criar formulário
+        <br></br>
+        <Typography variant="h4" component="h2">
+          <b>Criar formulário</b>
         </Typography>
         <Typography variant="h7" component="h2">
           <br></br>
-          Insira abaixo os campos que deseja presente em seu formulário de vacinação
+          Abaixo estão presentes algumas informações importantes para a Secretaria Estadual de Saúde.
+          <br></br>
+          Sinta-se a vontade para adicionar ou excluir campos da maneira que desejar, são permitidos no máximo <b>11 campos</b> de dados em um formulário.
           <br></br><br></br>
         </Typography>
         <form className={classes.root} onSubmit={handleSubmit}>
@@ -117,10 +121,10 @@ function App() {
                 value={inputField.nomeCampo}
                 onChange={event => handleChangeInput(inputField.id, event)}
               />
-              <IconButton disabled={inputFields.length === 4} onClick={() => handleRemoveFields(inputField.id)}>
+              <IconButton disabled={inputFields.length === 1} onClick={() => handleRemoveFields(inputField.id)}>
                 <RemoveIcon />
               </IconButton>
-              <IconButton disabled={inputFields.length === 5}
+              <IconButton disabled={inputFields.length === 11}
                 onClick={handleAddFields}
               >
                 <AddIcon />
@@ -135,6 +139,15 @@ function App() {
             startIcon={<PictureAsPdfIcon></PictureAsPdfIcon>}
             onClick={handleSubmit}
           >Gerar PDF</Button>
+          <Button
+            className={classes.button}
+            disabled={1}
+            variant="contained" 
+            color="primary"
+            type="submit" 
+            startIcon={<SaveAlt></SaveAlt>}
+            //onClick={}
+          >Recuperar</Button>
         </form>
       </center>
     </Container>
