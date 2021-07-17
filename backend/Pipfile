@@ -17,6 +17,8 @@ python-dotenv = "*"
 psycopg2-binary = "*"
 colorama = "*"
 pillow = "*"
+reportlab = "*"
+reportlab-qrcode = "*"
 
 [dev-packages]
 black = "*"

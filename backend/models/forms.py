@@ -1,5 +1,6 @@
 from db import db
 
+# TODO corrigir nome da classe para tabelas de imagens carregadas
 class FormsModel(db.Model):
     __tablename__ = "images"
     id = db.Column(db.Integer, primary_key=True)

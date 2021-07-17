@@ -68,10 +68,12 @@ class UserLogin(Resource):
         user_json = request.get_json()
         user_data = user_schema.load(user_json)
         user = UserModel.find_by_username(user_data.username)
-        password_encoded = user_data.password.encode("utf-8")
+
         if user:
 
-            valido = bcrypt.checkpw(password_encoded, user.password.encode("utf-8"))
+            # valido = bcrypt.checkpw(password_encoded, user.password.encode("utf-8"))
+            valido = (user_data.password == user.password) and (user_data.tipo == user.tipo)
+
             if valido:
                 additional_claims = {"username": user.username, "email": user.email}
                 access_token = create_access_token(
@@ -83,6 +85,7 @@ class UserLogin(Resource):
                 return {
                     "access_token": access_token,
                     "refresh_token": refresh_token,
+                    "tipo": user.tipo,
                 }, 200
 
         return {"message": INVALID_CREDENTIALS}, 401

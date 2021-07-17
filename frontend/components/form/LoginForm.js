@@ -34,11 +34,19 @@ function LoginForm({ props }) {
         ></input>
       </div>
       <div>
-        {/* <input
+        <input type="radio" name="tipo" value={1} onChange={onChangeHandler}></input>
+        <label>Tipo 1</label><br></br>
+        <input type="radio" name="tipo" value={2} onChange={onChangeHandler}></input>
+        <label>Tipo 2</label><br></br>
+        <input type="radio" name="tipo" value={3} onChange={onChangeHandler}></input>
+        <label>Tipo 3</label><br></br>
+      </div>
+      <div>
+        <input
           className="w-full px-4 py-2 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500"
           type="submit"
           value="Logar"
-        ></input> */}
+        ></input>
       </div>
       <div>
         <span className="bg-yellow-200">{stateFormMessage.message}</span>

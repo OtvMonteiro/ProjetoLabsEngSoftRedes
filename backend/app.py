@@ -9,6 +9,7 @@ from schema import ma
 from dotenv import load_dotenv
 from resources.user import UserRegister, UserLogin, User, UserLogout
 from resources.forms import UploadForm
+from resources.formularios import Formularios
 
 
 app = Flask(__name__)
@@ -43,6 +44,7 @@ api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
 api.add_resource(UploadForm,"/api/upload")
+api.add_resource(Formularios,"/api/create_form")
 
 
 if __name__ == "__main__":

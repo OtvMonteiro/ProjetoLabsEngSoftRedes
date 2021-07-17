@@ -27,6 +27,10 @@ const FORM_LOGIN_DATA = {
       error: 'Por favor, digite uma senha válida',
     },
   },
+  tipo: {
+    value: '',
+    required: true,
+  },
 }
 const FORM_REGISTER_DATA = {
   email: {
