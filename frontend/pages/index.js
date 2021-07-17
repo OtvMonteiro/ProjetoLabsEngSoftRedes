@@ -30,12 +30,16 @@ export default function LoginPage() {
   async function onSubmitHandler(e) {
     e.preventDefault() // esta linha impede que o formulário seja enviado sem
     let data = { ...stateFormData }
+    console.log(data)
     /* Aqui filtramos o conteúdo do stateFormData para que apenas os atributos username e 
     password sejam passados para o endpoint 
     */
     data = { ...data, username: data.username.value || '' }
     /* password */
     data = { ...data, password: data.password.value || '' }
+    /* tipo */
+    data = { ...data, tipo: data.tipo.value || '' }
+    console.log(data)
     /* validation handler */
     // const isValid = validationHandler(stateFormData) // a validação não será apresentada agora
 
@@ -60,7 +64,16 @@ export default function LoginPage() {
       let result = await registerApi.json()
       if (result.success && result.token) {
         Cookies.set('token', result.token)
-        Router.push('/profile') //redireciona para a tela de login.
+        
+        if (result.tipo == 1) {
+          Router.push('/criar_formulario') //redireciona para a tela de criação de formulário
+        }
+        else if (result.tipo == 2) {
+          Router.push('/image_upload') //redireciona para a tela de uplado de imagem
+        }
+        else {
+          Router.push('/digitacao') //redireciona para a tela de digitação
+        }        
       } else {
         setStateFormMessage(result)
       }
@@ -82,9 +95,9 @@ export default function LoginPage() {
           }}
         />
         {/* <CreateAccountBtn /> */}
-        <LoginEnviarImagemBtn />
+        {/* <LoginEnviarImagemBtn />
         <LoginDigitarBtn />
-        <LoginCriarFormularioBtn />
+        <LoginCriarFormularioBtn /> */}
       </div> 
     </Layout>
   )

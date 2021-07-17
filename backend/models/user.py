@@ -7,6 +7,7 @@ class UserModel(db.Model):
     username = db.Column(db.String(80), nullable=False, unique=True)
     email = db.Column(db.String(80), nullable=True, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    tipo = db.Column(db.Integer, nullable=False)
 
     def save_to_db(self) -> None:
         db.session.add(self)
@@ -27,3 +28,7 @@ class UserModel(db.Model):
     @classmethod
     def find_by_id(cls, _id: int) -> "UserModel":
         return cls.query.filter_by(id=_id).first()
+
+    @classmethod
+    def get_tipo(cls, username: str) -> int:
+        return cls.tipo

@@ -7,7 +7,7 @@ const login = async (req, res) => {
   console.log(urlApi, 'api da url?')
   switch (method) {
     case 'POST':
-      const { username, password } = req.body
+      const { username, password, tipo } = req.body
       if (!username || !password) {
         return res.status(400).json({
           success: 'false',
@@ -18,12 +18,14 @@ const login = async (req, res) => {
         const resposta = await axios.post(`${urlApi}/login`, {
           username: username,
           password: password,
+          tipo: tipo,
         })
 
         const token = resposta.data.access_token
         return res.status(200).json({
           success: true,
           token: token,
+          tipo: resposta.data.tipo,
           message: 'Login realizado com sucesso',
         })
       } catch (e) {
