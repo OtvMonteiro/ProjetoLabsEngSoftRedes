@@ -1,6 +1,17 @@
 $Env:KUBECONFIG=("$HOME\Downloads\okteto-kube.config;$Env:KUBECONFIG;$HOME\.kube\config")
 
 
+insert users na base postgresql do okteto:
+
+insert into users (username, email, password, tipo)
+values ('teste', 'teste', 'teste', 1)
+
+insert into users (username, email, password, tipo)
+values 
+('tipo1', 'tipo1', 'tipo1', 1),
+('tipo2', 'tipo2', 'tipo2', 2),
+('tipo3', 'tipo3', 'tipo3', 3)
+
 Frontend está enviando corretamente a image?
 Backend esta pegando e processando corretamente a imagem?
 Backend está enviando corretamente para a base da dados?
