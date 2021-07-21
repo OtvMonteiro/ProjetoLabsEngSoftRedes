@@ -10,6 +10,7 @@ from flask_jwt_extended import (
 )
 import bcrypt
 from models.user import UserModel
+from models.formularios import FormulariosModel
 from schemas.user import UserSchema
 
 # Mensagens pré-definidas
@@ -79,6 +80,11 @@ class UserLogin(Resource):
             # valido = bcrypt.checkpw(password_encoded, user.password.encode("utf-8"))
             valido = (user_data.password == user.password) and (user_data.tipo == user.tipo)
 
+            if FormulariosModel.find_by_municipio(user.username):
+                existeFormulario = 0
+            else:
+                existeFormulario = 1
+
             if valido:
                 print("encontrou")
                 additional_claims = {"username": user.username, "email": user.email}
@@ -92,6 +98,8 @@ class UserLogin(Resource):
                     "access_token": access_token,
                     "refresh_token": refresh_token,
                     "tipo": user.tipo,
+                    "username": user.username,
+                    "existeFormulario": existeFormulario,
                 }, 200
 
         return {"message": INVALID_CREDENTIALS}, 401

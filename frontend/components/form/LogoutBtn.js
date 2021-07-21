@@ -1,18 +1,24 @@
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+import Button from '@material-ui/core/Button';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const LogoutBtn = () => {
   const redirectToLoginPage = () => {
     Cookies.remove('token')
+    Cookies.remove('nomeDoUsuario')
+    Cookies.remove('existeFormulario')
     Router.push('/') //redireciona para a tela de cadastro.
   }
   return (
-    <button
+    <Button
+      // className={classes.button}
+      variant="contained" 
+      color="secondary"
+      type="submit"
+      startIcon={<ExitToAppIcon></ExitToAppIcon>}
       onClick={redirectToLoginPage}
-      className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-pink-700 rounded hover:bg-pink-500"
-    >
-      Deslogar
-    </button>
+    >Sair</Button>
   )
 }
 

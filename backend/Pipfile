@@ -23,7 +23,7 @@ reportlab-qrcode = "*"
 black = "*"
 
 [requires]
-python_version = "3.9.2"
+python_version = "3.9.1"
 
 [pipenv]
 allow_prereleases = true

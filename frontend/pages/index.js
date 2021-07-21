@@ -9,6 +9,7 @@ import { useState } from 'react'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 
+
 export default function LoginPage() {
   const [stateFormData, setStateFormData] = useState(FORM_LOGIN_DATA) // estado com os dados do formulário
   const [stateFormError, setStateFormError] = useState([]) // estado para armezar os erros
@@ -64,6 +65,10 @@ export default function LoginPage() {
       let result = await registerApi.json()
       if (result.success && result.token) {
         Cookies.set('token', result.token)
+        Cookies.set('nomeDoUsuario', result.username)
+        Cookies.set('existeFormulario', result.existeFormulario)
+        console.log("Cookies.get('existeFormulario'): ", Cookies.get('existeFormulario'))
+        console.log("Tipo: ", typeof(Cookies.get('existeFormulario')))
         
         if (result.tipo == 1) {
           Router.push('/criar_formulario') //redireciona para a tela de criação de formulário

@@ -18,23 +18,23 @@ class Formularios(Resource):
     def post(cls):
 
         requestJSON = request.get_json()
-        x = json.loads(requestJSON['camposJSON'])
-        # print(type(x))
-        # print(len(x))
+        print(requestJSON)
+        camposJSON = json.loads(requestJSON['camposJSON'])
         
         campos = []
-        for i in range(len(x)) :
-            print(x[i]['nomeCampo'])
-            campos.append(x[i]['nomeCampo'])
+        for i in range(len(camposJSON)) :
+            print(camposJSON[i]['nomeCampo'])
+            if camposJSON[i]['nomeCampo'] != '':
+                campos.append(camposJSON[i]['nomeCampo'])
 
         # Verificando se o municipio já criou um formulário
-        municipio = 'São Paulo' # TODO Esse municipio vem do nome usuário
+        municipio = requestJSON['nomeMunicipio']
         if FormulariosModel.find_by_municipio(municipio):
             formularioAntigo = FormulariosModel.find_by_municipio(municipio)
-            print("achou Barueri")
+            print("O munícipio já tem formulário")
             formularioAntigo.delete_from_db()
         else:
-            print("não achou Barueri")
+            print("O munícipio não tem formulário")
         
         # Armazenando o formulário no banco de dados
         formularioDict = {
@@ -47,42 +47,24 @@ class Formularios(Resource):
         
         formulario = formulario_schema.load(formularioDict)
         formulario.save_to_db()
-
-        # Teste de armazenamento no db (ESTÁ FUNCIONANDO)
-        # testJson = {
-        #     'municipio': 'Barueri',
-        #     'numCampos': str(len(campos)),
-        #     'campo1': campos[0],
-        #     'campo2': campos[1],
-        #     'campo3': campos[2]
-        # }
-        # test = formulario_schema.load(testJson)
-        # test.save_to_db()
         
         # Criando o formulário em pdf
         bufferPDF = BytesIO()
 
         myPDF = Canvas(bufferPDF, pagesize=A4)
-        myPDF = createPDF(campos, myPDF)        
-        
-        # myPDF.drawString(50,50,'Backend')
-        # myPDF.save()
+        myPDF = createPDF(campos, myPDF, municipio)
         
         bufferPDF.seek(0)
         pdfOut = bufferPDF.getvalue()
         bufferPDF.close()
 
-        '''
-        # return {"message": "Enviado com sucesso!"}, 201
-        # return send_file("FormulárioTeste.pdf", as_attachment=True)
-        '''
         response = make_response(pdfOut)
         response.headers['Content-Disposition'] = "attachment; filename='Test.pdf"
         response.mimetype = 'application/pdf'
         return response
 
 
-def createPDF(campos, canvas):
+def createPDF(campos, canvas, nomeDoMunicipio):
     '''
         Gera um formulário em pdf utilazando reportlab
     '''
@@ -124,7 +106,7 @@ def createPDF(campos, canvas):
         canvas.drawString(margem+margemCampo, yPosicaoCampo+alturaCampo+distanciaNomeCampo, campos[i])
 
     # QrCode:
-    qr = QRCodeImage('Deu trabalho, mas a gente conseguiu', size=larguraQRCode-2*distanciaQrMargem)
+    qr = QRCodeImage(nomeDoMunicipio, size=larguraQRCode-2*distanciaQrMargem)
     qr.drawOn(canvas, margem+larguraCabecalho+distanciaQrMargem, altura-margem-alturaCabecalhoEQR+distanciaQrMargem)
 
     # Cabeçalho
@@ -134,3 +116,58 @@ def createPDF(campos, canvas):
     canvas.save()
 
     return canvas
+
+
+class RecuperarFormulario(Resource):
+    @classmethod
+    def post(cls):
+        requestJSON = request.get_json()
+        print(requestJSON)
+        municipio = requestJSON['nomeMunicipio']
+        print(municipio)
+        formulario = FormulariosModel.find_by_municipio(municipio)
+        print(formulario.municipio)
+
+        camposRec = []
+        for i in range(1,formulario.numCampos+1):
+            if i == 1:
+                camposRec.append(formulario.campo1)
+            elif i == 2:
+                camposRec.append(formulario.campo2)
+            elif i == 3:
+                camposRec.append(formulario.campo3)
+            elif i == 4:
+                camposRec.append(formulario.campo4)
+            elif i == 5:
+                camposRec.append(formulario.campo5)
+            elif i == 6:
+                camposRec.append(formulario.campo6)
+            elif i == 7:
+                camposRec.append(formulario.campo7)
+            elif i == 8:
+                camposRec.append(formulario.campo8)
+            elif i == 9:
+                camposRec.append(formulario.campo9)
+            elif i == 10:
+                camposRec.append(formulario.campo10)
+            elif i == 11:
+                camposRec.append(formulario.campo11)
+            else:
+                print("Ihh rapaz!")
+        print(camposRec)
+
+        # Criando o formulário em pdf
+        bufferPDF = BytesIO()
+
+        myPDF = Canvas(bufferPDF, pagesize=A4)
+        myPDF = createPDF(camposRec, myPDF, municipio)
+        
+        bufferPDF.seek(0)
+        pdfOut = bufferPDF.getvalue()
+        bufferPDF.close()
+
+        response = make_response(pdfOut)
+        response.headers['Content-Disposition'] = "attachment; filename='Test.pdf"
+        response.mimetype = 'application/pdf'
+        return response
+

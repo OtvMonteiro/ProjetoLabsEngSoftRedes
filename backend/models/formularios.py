@@ -30,6 +30,14 @@ class FormulariosModel(db.Model):
     def find_by_municipio(cls, municipio: str) -> "FormulariosModel":
         return cls.query.filter_by(municipio=municipio).first()
 
+    # @classmethod
+    # def find_by_campos(cls, self) -> None:
+    #     for i in range(self.numCampos):
+    #         campo = 'campo'+str(i+1)
+
+
+    #     return campos
+
 
 
 # class CreatedFormModel(db.Model):

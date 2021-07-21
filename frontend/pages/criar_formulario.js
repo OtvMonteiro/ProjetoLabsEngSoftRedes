@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-//import Link from 'next/link'
-//import LayoutCriarFormulario from '../components/layout/LayoutCriarFormulario'
-//import { getAppCookies, verifyToken } from '../utilities/util'
-//import Image from 'next/image'
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -14,8 +10,9 @@ import AddIcon from '@material-ui/icons/Add';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import { v4 as uuidv4 } from 'uuid';
-
 import { makeStyles } from '@material-ui/core/styles';
+import Cookies from 'js-cookie';
+import LogoutBtn from '../components/form/LogoutBtn'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,32 +31,21 @@ function App() {
     { id: uuidv4(), nomeCampo: 'Nome' },
     { id: uuidv4(), nomeCampo: 'CPF' },
     { id: uuidv4(), nomeCampo: 'RG' },
-    //{ id: uuidv4(), nomeCampo: '' },
   ]);
 
+  // Criar o formulário
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("InputFields", inputFields);
-    // console.log("InputFields", inputFields.pop());
-    // console.log(inputFields[0]);
     
-    for (let i=0; i<inputFields.length; i++){
-      console.log(inputFields[i].nomeCampo);
-    }
+    // Imprime os campos desejados pelo usuário
+    // for (let i=0; i<inputFields.length; i++){
+    //   console.log(inputFields[i].nomeCampo);
+    // }
 
     let camposJSON = JSON.stringify(inputFields);
-    console.log(camposJSON);
-
     axios.post("http://localhost:5000/api/create_form", {
-      // headers: {
-      //   'Content-Type': 'application/json'
-      // },
-      // data: {
-      //   'Campo': 'nome do campo'
-      // }
-
-      // inputFields
-      camposJSON
+      'camposJSON': camposJSON,
+      'nomeMunicipio': Cookies.get('nomeDoUsuario')
     }).then(response => {
       //Create a Blob from the PDF Stream
           const file = new Blob(
@@ -75,6 +61,26 @@ function App() {
       });
 
   };
+
+  const handleSubmitRecuperar = (e) => {
+    e.preventDefault();
+
+    axios.post("http://localhost:5000/api/recover_form", {
+      'nomeMunicipio': Cookies.get('nomeDoUsuario')
+    }).then(response => {
+      //Create a Blob from the PDF Stream
+          const file = new Blob(
+            [response.data], 
+            {type: 'application/pdf'});
+      //Build a URL from the file
+          const fileURL = URL.createObjectURL(file);
+      //Open the URL on new Window
+          window.open(fileURL);
+      })
+      .catch(error => {
+          console.log(error);
+      });
+  }
 
   const handleChangeInput = (id, event) => {
     const newInputFields = inputFields.map(i => {
@@ -139,16 +145,18 @@ function App() {
             startIcon={<PictureAsPdfIcon></PictureAsPdfIcon>}
             onClick={handleSubmit}
           >Gerar PDF</Button>
-          <Button
-            className={classes.button}
-            disabled={1}
-            variant="contained" 
-            color="primary"
-            type="submit" 
-            startIcon={<SaveAlt></SaveAlt>}
-            //onClick={}
-          >Recuperar</Button>
         </form>
+        <Button
+          className={classes.button}
+          disabled={Number(Cookies.get('existeFormulario'))}
+          variant="contained" 
+          color="primary"
+          type="submit" 
+          startIcon={<SaveAlt></SaveAlt>}
+          onClick={handleSubmitRecuperar}
+        >Recuperar</Button>
+        <br></br>
+        <LogoutBtn></LogoutBtn>
       </center>
     </Container>
   );
