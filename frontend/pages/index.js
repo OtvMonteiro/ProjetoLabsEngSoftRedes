@@ -31,7 +31,7 @@ export default function LoginPage() {
   async function onSubmitHandler(e) {
     e.preventDefault() // esta linha impede que o formulário seja enviado sem
     let data = { ...stateFormData }
-    console.log(data)
+
     /* Aqui filtramos o conteúdo do stateFormData para que apenas os atributos username e 
     password sejam passados para o endpoint 
     */
@@ -40,12 +40,8 @@ export default function LoginPage() {
     data = { ...data, password: data.password.value || '' }
     /* tipo */
     data = { ...data, tipo: data.tipo.value || '' }
-    console.log(data)
-    /* validation handler */
-    // const isValid = validationHandler(stateFormData) // a validação não será apresentada agora
 
     const isValid = true // por agora, será considerado que o formulário sempre é válido
-
     if (isValid) {
       // Call an external API endpoint to get posts.
       // You can use any data fetching library

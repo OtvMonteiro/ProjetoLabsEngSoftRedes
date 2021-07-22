@@ -21,7 +21,8 @@ class Formularios(Resource):
         print(requestJSON)
         camposJSON = json.loads(requestJSON['camposJSON'])
         
-        campos = []
+        # Aqui serão adicionados os campos obrigatórios
+        campos = ['Nome','CPF','RG']
         for i in range(len(camposJSON)) :
             print(camposJSON[i]['nomeCampo'])
             if camposJSON[i]['nomeCampo'] != '':

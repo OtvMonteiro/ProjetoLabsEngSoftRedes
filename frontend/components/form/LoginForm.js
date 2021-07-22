@@ -10,7 +10,7 @@ function LoginForm({ props }) {
     <form onSubmit={onSubmitHandler} method="POST">
       <div>
         <label className="block mb-auto text-indigo-500 " htmlFor="username">
-          username
+          Usuário
         </label>
         <input
           className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-100"
@@ -23,7 +23,7 @@ function LoginForm({ props }) {
       <div>
         <label className="block mb-2 text-indigo-500" htmlFor="password">
           {' '}
-          password
+          Senha
         </label>
         <input
           className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-100"
@@ -34,13 +34,32 @@ function LoginForm({ props }) {
         ></input>
       </div>
       <div>
-        <input type="radio" name="tipo" value={1} onChange={onChangeHandler}></input>
-        <label>Tipo 1</label><br></br>
-        <input type="radio" name="tipo" value={2} onChange={onChangeHandler}></input>
-        <label>Tipo 2</label><br></br>
-        <input type="radio" name="tipo" value={3} onChange={onChangeHandler}></input>
-        <label>Tipo 3</label><br></br>
+        <center>
+          <table>
+            <tr>
+              <th width="200">
+                <label>
+                  Criar<br></br>
+                  <input type="radio" name="tipo" value={1} onChange={onChangeHandler}></input><br></br>
+                </label>
+              </th>
+              <th width="200">
+                <label>
+                  Enviar<br></br>
+                  <input type="radio" name="tipo" value={2} onChange={onChangeHandler}></input><br></br>
+                </label>
+              </th>
+              <th width="200">
+                <label>
+                  Digitar<br></br>
+                  <input type="radio" name="tipo" value={3} onChange={onChangeHandler}></input><br></br>
+                </label>
+              </th>
+            </tr>
+          </table>
+        </center>
       </div>
+      <br></br>
       <div>
         <input
           className="w-full px-4 py-2 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500"
