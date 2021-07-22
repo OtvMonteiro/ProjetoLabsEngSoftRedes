@@ -21,14 +21,14 @@ export default function UploadImage() {
     }
 
     const onUploadHandler = async event => {
-        console.log("upload image files");
-        console.log(stateUploadImage['selectedFile'])
+        // console.log("upload image files");
+        // console.log(stateUploadImage['selectedFile'])
         
         var formdata = new FormData();
         formdata.append('imagem', stateUploadImage['selectedFile']);
         // formdata.append('cris', 'gistavo');
         // console.log('asdasd')
-        console.log(formdata);
+        // console.log(formdata);
 
         // axios({
         //     url: '/upload',
@@ -41,7 +41,6 @@ export default function UploadImage() {
         
         // formdata.append("fileimage", imagefile.files[0]);
         // const url=process.env.NEXT_PUBLIC_BASE_URL; console.log(url);
-        //TODO: post está correto?
         //axios.post('https://projetolabsengsoftredes-otvmonteiro.cloud.okteto.net/api/upload', formdata, {
         axios.post('/carregar', formdata, {
         headers: {

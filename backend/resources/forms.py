@@ -43,7 +43,8 @@ class UploadForm(Resource):
 
         
         dados = { 'image_data' : str(img_byte_arr), 
-                    'digitado' : False
+                    'digitado' : False,
+                    'id_digitador' : None
         } 
         formulario = forms_schema.load(dados)
         formulario.save_to_db()

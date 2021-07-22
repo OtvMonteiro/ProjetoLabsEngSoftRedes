@@ -6,7 +6,7 @@ class FormsModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_data = db.Column(db.String, nullable=False)
     digitado = db.Column(db.Boolean, nullable=False)
-#    image_data = db.Column(db.LargeBinary, nullable=False)
+    id_digitador = db.Column(db.Integer)
 
 
     def save_to_db(self) -> None:
