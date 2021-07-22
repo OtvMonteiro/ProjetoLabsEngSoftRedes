@@ -66,7 +66,6 @@ function App() {
     }).then(response => {
       if (Number(Cookies.get('existeFormulario')) != 0) {
         setRecuperarButton(Number(Cookies.set('existeFormulario', 0)))
-        console.log("____Mundando o Cookie existe formulário____");
       }
       //Create a Blob from the PDF Stream
           const file = new Blob(
@@ -150,7 +149,7 @@ function App() {
         <Typography variant="h4" component="h2">
           <b>Criar formulário</b>
         </Typography>
-        <Typography variant="h7" component="h2">
+        <Typography component="h2">
           <br></br>
           Abaixo estão presentes as informações obrigatórias exigidas pela Secretaria Estadual de Saúde. 
           Elas serão automaticamente incorporadas ao seu formulários.
@@ -206,7 +205,7 @@ function App() {
         </form>
         <Button
           className={classes.button}
-          disabled={recuperarButton}
+          disabled={Boolean(recuperarButton)}
           variant="contained" 
           color="primary"
           type="submit" 

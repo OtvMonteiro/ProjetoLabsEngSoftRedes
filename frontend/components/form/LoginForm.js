@@ -36,6 +36,7 @@ function LoginForm({ props }) {
       <div>
         <center>
           <table>
+            <tbody>
             <tr>
               <th width="200">
                 <label>
@@ -56,6 +57,7 @@ function LoginForm({ props }) {
                 </label>
               </th>
             </tr>
+            </tbody>
           </table>
         </center>
       </div>

@@ -63,8 +63,6 @@ export default function LoginPage() {
         Cookies.set('token', result.token)
         Cookies.set('nomeDoUsuario', result.username)
         Cookies.set('existeFormulario', result.existeFormulario)
-        console.log("Cookies.get('existeFormulario'): ", Cookies.get('existeFormulario'))
-        console.log("Tipo: ", typeof(Cookies.get('existeFormulario')))
         
         if (result.tipo == 1) {
           Router.push('/criar_formulario') //redireciona para a tela de criação de formulário
