@@ -1,13 +1,11 @@
 import Layout from '../components/layout/Layout'
 import LoginForm from '../components/form/LoginForm'
-import CreateAccountBtn from '../components/form/CreateAccountBtn'
-import LoginCriarFormularioBtn from '../components/form/LoginCriarFormularioBtn'
-import LoginDigitarBtn from '../components/form/LoginDigitarBtn'
-import LoginEnviarImagemBtn from '../components/form/LoginEnviarImagemBtn'
+// import CreateAccountBtn from '../components/form/CreateAccountBtn'
 import { FORM_LOGIN_DATA } from '../components/schemas/forms'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+
 
 export default function LoginPage() {
   const [stateFormData, setStateFormData] = useState(FORM_LOGIN_DATA) // estado com os dados do formulário
@@ -30,7 +28,7 @@ export default function LoginPage() {
   async function onSubmitHandler(e) {
     e.preventDefault() // esta linha impede que o formulário seja enviado sem
     let data = { ...stateFormData }
-    console.log(data)
+
     /* Aqui filtramos o conteúdo do stateFormData para que apenas os atributos username e 
     password sejam passados para o endpoint 
     */
@@ -39,12 +37,8 @@ export default function LoginPage() {
     data = { ...data, password: data.password.value || '' }
     /* tipo */
     data = { ...data, tipo: data.tipo.value || '' }
-    console.log(data)
-    /* validation handler */
-    // const isValid = validationHandler(stateFormData) // a validação não será apresentada agora
 
     const isValid = true // por agora, será considerado que o formulário sempre é válido
-
     if (isValid) {
       // Call an external API endpoint to get posts.
       // You can use any data fetching library
@@ -64,6 +58,8 @@ export default function LoginPage() {
       let result = await registerApi.json()
       if (result.success && result.token) {
         Cookies.set('token', result.token)
+        Cookies.set('nomeDoUsuario', result.username)
+        Cookies.set('existeFormulario', result.existeFormulario)
         
         if (result.tipo == 1) {
           Router.push('/criar_formulario') //redireciona para a tela de criação de formulário

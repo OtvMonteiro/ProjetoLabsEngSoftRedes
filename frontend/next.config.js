@@ -9,6 +9,10 @@ module.exports = {
           source: '/campos',
           destination: 'https://projetolabsengsoftredes-otvmonteiro.cloud.okteto.net/api/create_form',
         },
+        { // TODO lembra de modificar a /recuper no axios
+          source: '/recuperar',
+          destination: 'https://projetolabsengsoftredes-otvmonteiro.cloud.okteto.net/api/recover_form',
+        },
       ]
     },
 }

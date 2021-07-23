@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from resources.user import UserRegister, UserLogin, User, UserLogout
 from resources.forms import UploadForm
 from resources.formularios import Formularios
+from resources.formularios import RecuperarFormulario
 
 
 app = Flask(__name__)
@@ -45,6 +46,7 @@ api.add_resource(UserLogin, "/login")
 api.add_resource(UserLogout, "/logout")
 api.add_resource(UploadForm,"/api/upload")
 api.add_resource(Formularios,"/api/create_form")
+api.add_resource(RecuperarFormulario,"/api/recover_form")
 
 
 if __name__ == "__main__":
