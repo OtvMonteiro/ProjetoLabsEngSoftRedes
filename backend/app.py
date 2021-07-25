@@ -8,9 +8,10 @@ from db import db
 from schema import ma
 from dotenv import load_dotenv
 from resources.user import UserRegister, UserLogin, User, UserLogout
-from resources.forms import UploadForm
+from resources.carregar_imagem import UploadForm
 from resources.formularios import Formularios
 from resources.formularios import RecuperarFormulario
+from resources.digitacao import ContinueDigitacao, LoadDigitacao
 
 
 app = Flask(__name__)
@@ -47,6 +48,8 @@ api.add_resource(UserLogout, "/logout")
 api.add_resource(UploadForm,"/api/upload")
 api.add_resource(Formularios,"/api/create_form")
 api.add_resource(RecuperarFormulario,"/api/recover_form")
+api.add_resource(LoadDigitacao, "/api/load_digitacao")
+api.add_resource(ContinueDigitacao, "/api/continue_digitacao")
 
 
 if __name__ == "__main__":

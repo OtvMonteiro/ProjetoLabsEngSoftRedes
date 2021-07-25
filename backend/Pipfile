@@ -19,6 +19,7 @@ colorama = "*"
 pillow = "*"
 reportlab = "*"
 reportlab-qrcode = "*"
+pyzbar = "*"
 
 [dev-packages]
 black = "*"
