@@ -20,8 +20,6 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-let numeroCampoAdicionais = 11-3;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -127,6 +125,7 @@ function App() {
     Cookies.remove('token')
     Cookies.remove('nomeDoUsuario')
     Cookies.remove('existeFormulario')
+    Cookies.remove('camposObrigatorios')
     Router.push('/') //redireciona para a tela de cadastro.
   }
 
@@ -136,11 +135,15 @@ function App() {
   }
 
   // Dados Obrigatórios
-  const rows = [
-    createData('Nome'),
-    createData('CPF'),
-    createData('RG'),
-  ];
+  let dadosObrigatorios = JSON.parse(Cookies.get('camposObrigatorios'))
+
+  const rows = [];
+
+  for (let i = 0; i < dadosObrigatorios.length; i++) {
+    rows.push(createData(dadosObrigatorios[i]))
+  }
+
+  let numeroCampoAdicionais = 11 - dadosObrigatorios.length
 
   return (
     <Container>

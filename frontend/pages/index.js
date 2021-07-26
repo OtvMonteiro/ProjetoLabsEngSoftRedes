@@ -59,9 +59,10 @@ export default function LoginPage() {
       if (result.success && result.token) {
         Cookies.set('token', result.token)
         Cookies.set('nomeDoUsuario', result.username)
-        Cookies.set('existeFormulario', result.existeFormulario)
         
         if (result.tipo == 1) {
+          Cookies.set('existeFormulario', result.existeFormulario)
+          Cookies.set('camposObrigatorios', result.camposObrigatorios)
           Router.push('/criar_formulario') //redireciona para a tela de criação de formulário
         }
         else if (result.tipo == 2) {

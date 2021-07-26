@@ -13,6 +13,8 @@ from models.user import UserModel
 from models.formularios import FormulariosModel
 from schemas.user import UserSchema
 
+from resources.formularios import camposObrigatorios
+
 # Mensagens pré-definidas
 USER_ALREADY_EXISTS = "Um usuário com esse login já existe."
 USER_EMAIL_ALREADY_EXISTS = "Um usuário com esse email já existe."
@@ -100,6 +102,7 @@ class UserLogin(Resource):
                     "tipo": user.tipo,
                     "username": user.username,
                     "existeFormulario": existeFormulario,
+                    "camposObrigatorios": camposObrigatorios,
                 }, 200
 
         return {"message": INVALID_CREDENTIALS}, 401

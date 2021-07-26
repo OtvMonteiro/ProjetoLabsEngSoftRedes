@@ -13,6 +13,8 @@ from schemas.formularios import FormulariosSchema
 
 formulario_schema = FormulariosSchema()
 
+camposObrigatorios = ['Nome','CPF','RG', 'Lote', 'Data de Aplicação']
+
 class Formularios(Resource):
     @classmethod
     def post(cls):
@@ -22,11 +24,16 @@ class Formularios(Resource):
         camposJSON = json.loads(requestJSON['camposJSON'])
         
         # Aqui serão adicionados os campos obrigatórios
-        campos = ['Nome','CPF','RG']
+        campos = camposObrigatorios.copy()
+        camposUpperCase = []
+        for i in range(len(campos)):
+            camposUpperCase.append(campos[i].upper())
+
         for i in range(len(camposJSON)) :
             print(camposJSON[i]['nomeCampo'])
-            if camposJSON[i]['nomeCampo'] != '':
-                campos.append(camposJSON[i]['nomeCampo'])
+            if camposJSON[i]['nomeCampo'] != '' and camposJSON[i]['nomeCampo'].strip().upper() not in camposUpperCase:
+                campos.append(camposJSON[i]['nomeCampo'].strip())
+                camposUpperCase.append(camposJSON[i]['nomeCampo'].strip().upper())
 
         # Verificando se o municipio já criou um formulário
         municipio = requestJSON['nomeMunicipio']

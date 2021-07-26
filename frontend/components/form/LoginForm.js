@@ -41,7 +41,7 @@ function LoginForm({ props }) {
               <th width="200">
                 <label>
                   Criar<br></br>
-                  <input type="radio" name="tipo" value={1} onChange={onChangeHandler}></input><br></br>
+                  <input type="radio" name="tipo" value={1} onChange={onChangeHandler} defaultChecked></input><br></br>
                 </label>
               </th>
               <th width="200">
