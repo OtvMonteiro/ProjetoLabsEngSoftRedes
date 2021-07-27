@@ -28,12 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    backgroundColor: theme.palette.success.main,
+    width: 150,
+    '&:hover': {
+      backgroundColor: theme.palette.success.dark,
+    },
+  },
+  buttonLogout: {
+    margin: theme.spacing(1),
+    width: 100,
+    backgroundColor: theme.palette.secondary.main,
   },
   table: {
-    maxWidth: 250,
+    maxWidth: 400,
   },
   firstRow: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.success.main,
   },
   cell: {
     color: theme.palette.common.white,
@@ -135,7 +145,13 @@ function App() {
   }
 
   // Dados Obrigatórios
-  let dadosObrigatorios = JSON.parse(Cookies.get('camposObrigatorios'))
+  let dadosObrigatorios
+  if (Cookies.get('camposObrigatorios') == undefined) {
+    dadosObrigatorios = ["Nome","CPF","RG","Lote","Data de Aplicação"]
+  }
+  else {
+    dadosObrigatorios = JSON.parse(Cookies.get('camposObrigatorios'))
+  } 
 
   const rows = [];
 
@@ -149,7 +165,7 @@ function App() {
     <Container>
       <center>
         <br></br>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h4" component="h2" className="text-green-500">
           <b>Criar formulário</b>
         </Typography>
         <Typography component="h2">
@@ -217,7 +233,7 @@ function App() {
         >Recuperar</Button>
         <br></br>
         <Button
-          className={classes.button}
+          className={classes.buttonLogout}
           variant="contained" 
           color="secondary"
           type="submit"

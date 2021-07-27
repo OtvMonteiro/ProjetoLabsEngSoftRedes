@@ -5,6 +5,7 @@ import { FORM_LOGIN_DATA } from '../components/schemas/forms'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+import Image from 'next/image'
 
 
 export default function LoginPage() {
@@ -80,6 +81,15 @@ export default function LoginPage() {
 
   return (
     <Layout title={'Login'}>
+      <Image className="flex"
+        src="/logoVivaForms.png"
+        alt="Logo VivaForms"
+        width="300"
+        height="76"
+      ></Image>
+      <br></br>
+      <br></br>
+      <br></br>
       <div className="flex flex-col">
         <LoginForm
           props={{
@@ -91,7 +101,7 @@ export default function LoginPage() {
             stateFormMessage,
           }}
         />
-      </div> 
+      </div>
     </Layout>
   )
 }
