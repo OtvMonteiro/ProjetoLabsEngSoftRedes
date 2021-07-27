@@ -28,7 +28,7 @@ const FORM_LOGIN_DATA = {
     },
   },
   tipo: {
-    value: '',
+    value: '1',
     required: true,
   },
 }

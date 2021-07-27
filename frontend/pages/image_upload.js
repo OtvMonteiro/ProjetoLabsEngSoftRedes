@@ -3,7 +3,10 @@ import axios from 'axios'
 import Link from 'next/link'
 import Layout from '../components/layout/Layout'
 import { getAppCookies, verifyToken } from '../utilities/util'
+import Cookies from 'js-cookie'
+import Router from 'next/router'
 import Image from 'next/image'
+
 
 export default function UploadImage() {
     const [stateUploadImage,setstateUploadImage] = useState({
@@ -49,6 +52,12 @@ export default function UploadImage() {
         }).then(response => console.log(response));
         
     }
+
+    const redirectToLoginPage = () => {
+        Cookies.remove('token')
+        Cookies.remove('nomeDoUsuario')
+        Router.push('/') //redireciona para a tela de cadastro.
+      }
     
     return (
         
@@ -68,8 +77,15 @@ export default function UploadImage() {
         /> 
         {/* <input id="uploadImage" type="file" name="myPhoto" /> */}
         <div>
-            <input className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="file" onChange={onSelectFile} multiple></input>
-            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="submit" onClick={onUploadHandler}>Enviar</button>
+            {/* <input className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="file" onChange={onSelectFile} multiple></input> */}
+            <input
+                className="w-full px-4 py-2 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500"
+                type="file"
+                onChange={onSelectFile} 
+                multiple
+            ></input>
+            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500" type="submit" onClick={onUploadHandler}>Enviar</button>
+            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-pink-700 rounded hover:bg-pink-500" type="submit" onClick={redirectToLoginPage}>Sair</button>
         </div>
 
         </main>

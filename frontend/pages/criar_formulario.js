@@ -20,8 +20,6 @@ import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 
-let numeroCampoAdicionais = 11-3;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -30,12 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    backgroundColor: theme.palette.success.main,
+    width: 150,
+    '&:hover': {
+      backgroundColor: theme.palette.success.dark,
+    },
+  },
+  buttonLogout: {
+    margin: theme.spacing(1),
+    width: 100,
+    backgroundColor: theme.palette.secondary.main,
   },
   table: {
-    maxWidth: 250,
+    maxWidth: 400,
   },
   firstRow: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.success.main,
   },
   cell: {
     color: theme.palette.common.white,
@@ -60,7 +68,7 @@ function App() {
     // }
 
     let camposJSON = JSON.stringify(inputFields);
-    axios.post('/campos', {
+    axios.post("http://localhost:5000/api/create_form", {
       'camposJSON': camposJSON,
       'nomeMunicipio': Cookies.get('nomeDoUsuario')
     }).then(response => {
@@ -85,7 +93,7 @@ function App() {
   const handleSubmitRecuperar = (e) => {
     e.preventDefault();
 
-    axios.post('/recuperar', {
+    axios.post("http://localhost:5000/api/recover_form", {
       'nomeMunicipio': Cookies.get('nomeDoUsuario')
     }).then(response => {
       //Create a Blob from the PDF Stream
@@ -127,6 +135,7 @@ function App() {
     Cookies.remove('token')
     Cookies.remove('nomeDoUsuario')
     Cookies.remove('existeFormulario')
+    Cookies.remove('camposObrigatorios')
     Router.push('/') //redireciona para a tela de cadastro.
   }
 
@@ -136,17 +145,27 @@ function App() {
   }
 
   // Dados Obrigatórios
-  const rows = [
-    createData('Nome'),
-    createData('CPF'),
-    createData('RG'),
-  ];
+  let dadosObrigatorios
+  if (Cookies.get('camposObrigatorios') == undefined) {
+    dadosObrigatorios = ["Nome","CPF","RG","Lote","Data de Aplicação"]
+  }
+  else {
+    dadosObrigatorios = JSON.parse(Cookies.get('camposObrigatorios'))
+  } 
+
+  const rows = [];
+
+  for (let i = 0; i < dadosObrigatorios.length; i++) {
+    rows.push(createData(dadosObrigatorios[i]))
+  }
+
+  let numeroCampoAdicionais = 11 - dadosObrigatorios.length
 
   return (
     <Container>
       <center>
         <br></br>
-        <Typography variant="h4" component="h2">
+        <Typography variant="h4" component="h2" className="text-green-500">
           <b>Criar formulário</b>
         </Typography>
         <Typography component="h2">
@@ -214,7 +233,7 @@ function App() {
         >Recuperar</Button>
         <br></br>
         <Button
-          className={classes.button}
+          className={classes.buttonLogout}
           variant="contained" 
           color="secondary"
           type="submit"

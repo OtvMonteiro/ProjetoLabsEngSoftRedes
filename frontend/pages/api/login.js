@@ -28,6 +28,7 @@ const login = async (req, res) => {
           tipo: resposta.data.tipo,
           username: resposta.data.username,
           existeFormulario: resposta.data.existeFormulario,
+          camposObrigatorios: resposta.data.camposObrigatorios,
           message: 'Login realizado com sucesso',
         })
       } catch (e) {

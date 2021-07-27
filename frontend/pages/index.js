@@ -5,6 +5,7 @@ import { FORM_LOGIN_DATA } from '../components/schemas/forms'
 import { useState } from 'react'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
+import Image from 'next/image'
 
 
 export default function LoginPage() {
@@ -59,9 +60,10 @@ export default function LoginPage() {
       if (result.success && result.token) {
         Cookies.set('token', result.token)
         Cookies.set('nomeDoUsuario', result.username)
-        Cookies.set('existeFormulario', result.existeFormulario)
         
         if (result.tipo == 1) {
+          Cookies.set('existeFormulario', result.existeFormulario)
+          Cookies.set('camposObrigatorios', result.camposObrigatorios)
           Router.push('/criar_formulario') //redireciona para a tela de criação de formulário
         }
         else if (result.tipo == 2) {
@@ -79,6 +81,15 @@ export default function LoginPage() {
 
   return (
     <Layout title={'Login'}>
+      <Image className="flex"
+        src="/logoVivaForms.png"
+        alt="Logo VivaForms"
+        width="300"
+        height="76"
+      ></Image>
+      <br></br>
+      <br></br>
+      <br></br>
       <div className="flex flex-col">
         <LoginForm
           props={{
@@ -90,7 +101,7 @@ export default function LoginPage() {
             stateFormMessage,
           }}
         />
-      </div> 
+      </div>
     </Layout>
   )
 }
