@@ -7,6 +7,7 @@ class ImagensCarregadasModel(db.Model):
     image_data = db.Column(db.String, nullable=False)
     digitado = db.Column(db.Boolean, nullable=False)
     id_digitador = db.Column(db.Integer)
+    municipio = db.Column(db.String, nullable=False)
 
     def save_to_db(self) -> None:
         db.session.add(self)

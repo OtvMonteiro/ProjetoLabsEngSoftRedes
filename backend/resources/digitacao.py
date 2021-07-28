@@ -4,21 +4,22 @@ from flask import request, make_response, send_file
 from flask_restful import Resource
 from PIL import Image
 import base64
-from pyzbar import pyzbar
+# from pyzbar import pyzbar
 
 from models.formularios import FormulariosModel
 from models.imagem_carregada import ImagensCarregadasModel
 from schemas.imagem_carregada import ImagensCarregadasSchema
 from models.user import UserModel
+# from resources.carregar_imagem import imagens_por_municipio
 
 imagens_carregadas_model = ImagensCarregadasModel()
 
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    get_jwt_identity,
-    jwt_required,
-)
+# from flask_jwt_extended import (
+#     create_access_token,
+#     create_refresh_token,
+#     get_jwt_identity,
+#     jwt_required,
+# )
 
 
 documento_por_digitador = {}
@@ -47,20 +48,37 @@ class DocumentoSendoDigitado:
             img_bytesIO.seek(0)
             self.image_file = Image.open(img_bytesIO)
 
-            pyzbar_decode = pyzbar.decode(self.image_file)
-            if pyzbar_decode:
-                qrcode_decoded = pyzbar_decode[0]
-            else:
-                qrcode_decoded = None
-                # print('QR Code não reconhecido')
-                self.valid = {"message": 'QR Code não reconhecido'}, 402
-                
-            self.nome_municipio = qrcode_decoded.data.decode()
+            # pyzbar_decode = pyzbar.decode(self.image_file)
+            # if pyzbar_decode:
+            #     qrcode_decoded = pyzbar_decode[0]
+            # else:
+            #     qrcode_decoded = None
+            #     # print('QR Code não reconhecido')
+            #     self.valid = {"message": 'QR Code não reconhecido'}, 402
+
+            self.nome_municipio = self.image_orm.municipio
+
+            # for municipio in imagens_por_municipio.keys():
+            #     imgs = imagens_por_municipio[municipio]
+            #     print(imgs)
+            #     for img in imgs:
+            #         if img.image_id == self.image_orm.id:
+            #             self.nome_municipio = municipio
+            #             print('municipio encontrado', municipio)
+            #             break
+
+            # self.nome_municipio = qrcode_decoded.data.decode()
+            print(self.nome_municipio)
             formulario_model = FormulariosModel.find_by_municipio(self.nome_municipio)
+            
+            if formulario_model is None:
+                self.finaliza_digitacao()
+                return {'message': 'O município informado para esse formulário está errado.', 'erro': True}
+
             self.num_campos = formulario_model.numCampos
             
             if self.num_campos < 1:
-                self.valid = {"message": 'Não foram definidos campos'}, 401
+                self.valid = {"message": 'Não foram definidos campos', 'erro': True}
                 
             for i in range(self.num_campos):
                 nome_campo = formulario_model.__getattribute__('campo'+str(i+1))
@@ -81,12 +99,12 @@ class DocumentoSendoDigitado:
                 data = "data:image/png;base64," + base64.b64encode(img_io.read()).decode()
                 self.images_campos.append(data)
 
-            self.valid = {'message': 'Deu certo!'}, False
+            self.valid = {'message': 'Deu certo!', 'erro':False}
             self.set_digitador(nome_digitador)
             return
         else:
             # print('Nenhum formulário para digitar')
-            self.valid = {"message": 'Não há formulários para digitar'}, 404
+            self.valid = {"message": 'Não há formulários para digitar', 'erro': True}
 
     def get_current_state(self):
         if self.counter == self.num_campos:
@@ -117,6 +135,10 @@ class DocumentoSendoDigitado:
 
         print('Enviado ao Vacivida:', vacivida_api_dict)
 
+    def finaliza_digitacao(self):
+        self.digitacao_terminada = True
+        self.image_orm.update_digitado(True)
+        documento_por_digitador.pop(self.nome_digitador)
 
 def get_specific_campo_area(campo_area, campo_coord):
     return (campo_area[0]+campo_coord[0],campo_area[1]+campo_coord[1],campo_area[2]+campo_coord[0],campo_area[3]+campo_coord[1])
@@ -161,11 +183,11 @@ class LoadDigitacao(Resource):
 
             new_documento = DocumentoSendoDigitado(nome_digitador)
             # print(new_documento)
-            msg, erro = new_documento.valid
+            msg = new_documento.valid
 
-            if erro:
-                print('erro ao gerar documento', erro)
-                return {**msg, 'erro': True}
+            if msg['erro']:
+                print('erro ao gerar documento')
+                return msg
 
             documento_por_digitador[nome_digitador] = new_documento
 
