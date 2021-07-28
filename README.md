@@ -2,7 +2,7 @@
 
 **Escola Politécnica da Universidade de São Paulo<br/>
 PCS3434 - Laboratório de Engenharia de Software<br/>
-PCS4334 - Laboratório de Redes de Computadores**
+PCS3443 - Laboratório de Redes de Computadores**
 
 **Grupo 6:**
 
