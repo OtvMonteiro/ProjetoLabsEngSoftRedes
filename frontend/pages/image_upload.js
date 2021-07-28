@@ -9,10 +9,12 @@ import Image from 'next/image'
 
 
 export default function UploadImage() {
-    const [stateUploadImage,setstateUploadImage] = useState({
+    const [stateUploadImage, setstateUploadImage] = useState({
         selectedFile: null
     })
-
+    const [stateStatus, setStateStatus] = useState({
+      status: ''
+    })
     // let formdata = new FormData()
     
 
@@ -20,6 +22,7 @@ export default function UploadImage() {
         console.log("corrected inputed image files");
         console.log(event.target.files[0]);
         setstateUploadImage({selectedFile: event.target.files[0]})
+        setStateStatus({status: ''})
         // formdata.append('imagem', event.target.files)
     }
 
@@ -45,11 +48,16 @@ export default function UploadImage() {
         // formdata.append("fileimage", imagefile.files[0]);
         // const url=process.env.NEXT_PUBLIC_BASE_URL; console.log(url);
         //axios.post('https://projetolabsengsoftredes-otvmonteiro.cloud.okteto.net/api/upload', formdata, {
-        axios.post('/carregar', formdata, {
+        axios.post('http://192.168.15.101:5000/api/carregar', formdata, {
         headers: {
         "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
         }
-        }).then(response => console.log(response));
+        }).then(response => {
+          console.log(response);
+          setStateStatus({status: response.data.status});
+          }
+          
+          );
         
     }
 
@@ -79,15 +87,20 @@ export default function UploadImage() {
         <div>
             {/* <input className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="file" onChange={onSelectFile} multiple></input> */}
             <input
+                id='file_input'
                 className="w-full px-4 py-2 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500"
                 type="file"
                 onChange={onSelectFile} 
                 multiple
             ></input>
-            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500" type="submit" onClick={onUploadHandler}>Enviar</button>
+            <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500" type="submit" onClick={() => {onUploadHandler(); document.getElementById("file_input").value = ''}}>Enviar</button>
             <button className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-pink-700 rounded hover:bg-pink-500" type="submit" onClick={redirectToLoginPage}>Sair</button>
         </div>
-
+            <div className="flex flex-col">
+              <span className="bg-yellow-300">
+                {stateStatus.status}
+              </span>
+            </div>
         </main>
       </div>
     </Layout>

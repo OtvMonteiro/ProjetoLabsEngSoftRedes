@@ -13,12 +13,12 @@ from models.user import UserModel
 
 imagens_carregadas_model = ImagensCarregadasModel()
 
-from flask_jwt_extended import (
-    create_access_token,
-    create_refresh_token,
-    get_jwt_identity,
-    jwt_required,
-)
+# from flask_jwt_extended import (
+#     create_access_token,
+#     create_refresh_token,
+#     get_jwt_identity,
+#     jwt_required,
+# )
 
 
 documento_por_digitador = {}
@@ -56,6 +56,7 @@ class DocumentoSendoDigitado:
                 self.valid = {"message": 'QR Code não reconhecido'}, 402
                 
             self.nome_municipio = qrcode_decoded.data.decode()
+            print(self.nome_municipio)
             formulario_model = FormulariosModel.find_by_municipio(self.nome_municipio)
             self.num_campos = formulario_model.numCampos
             

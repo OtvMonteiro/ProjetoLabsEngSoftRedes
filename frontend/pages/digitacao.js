@@ -23,7 +23,7 @@ class Digitacao extends Component {
 
   async componentDidMount() {
     // StatusBar.setNetworkActivityIndicatorVisible(true)
-    const response = await axios.post('/load_digitacao', {'nome_digitador': Cookies.get('nomeDoUsuario')});
+    const response = await axios.post('http://192.168.15.101:5000/api/load_digitacao', {'nome_digitador': Cookies.get('nomeDoUsuario')});
     const erro = await response['data']['erro']
     const message = await response['data']['message']
     if (erro){
@@ -70,7 +70,7 @@ class Digitacao extends Component {
     // console.log(campo_text)
     // Inserir lógica para adicionar ao formdata texto digitado do campo
 
-    const post_response = await axios.post('/continue_digitacao', {formdata})
+    const post_response = await axios.post('http://192.168.15.101:5000/api/continue_digitacao', {formdata})
      
       const erro = await post_response['data']['erro']
       const message = await post_response['data']['message']

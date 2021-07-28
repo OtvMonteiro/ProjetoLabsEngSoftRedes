@@ -25,7 +25,7 @@ class UploadForm(Resource):
         imagem.seek(0)
 
         imagem_PIL = Image.open(imagem)
-        max_width = 4000.
+        max_width = 2000.
         orig_rel = imagem_PIL.height/imagem_PIL.width
         max_height = orig_rel*max_width
         imagem_PIL = imagem_PIL.resize((int(max_width), int(max_height)))
@@ -35,7 +35,8 @@ class UploadForm(Resource):
         pyzbar_decode = pyzbar.decode(qrcode_image)
 
         if not pyzbar_decode:
-            return 'QR Code não reconhecido'
+            print('QR Code não reconhecido 1') 
+            return {'status': 'QR Code não reconhecido'}
 
         qrcode_decoded = pyzbar_decode[0]
 
@@ -62,7 +63,8 @@ class UploadForm(Resource):
         pyzbar_decode_rotated = pyzbar.decode(imagem_rotated)
 
         if not pyzbar_decode_rotated:
-            return 'QR Code não reconhecido'
+            print('QR Code não reconhecido 2') 
+            return {'status': 'QR Code não reconhecido'}
 
         qrcode_polygon_rotated = pyzbar_decode_rotated[0].polygon
         qrcode_polygon_expected = [Point(x=1310, y=127), Point(x=1310, y=344), Point(x=1527, y=344), Point(x=1527, y=127)]
@@ -82,7 +84,8 @@ class UploadForm(Resource):
         pyzbar_decode_resized = pyzbar.decode(imagem_resized)
 
         if not pyzbar_decode_resized:
-            return 'QR Code não reconhecido'
+            print ('QR Code não reconhecido 3')
+            return {'status': 'QR Code não reconhecido'}
 
         qrcode_polygon_resized = pyzbar_decode_resized[0].polygon
 
@@ -112,7 +115,7 @@ class UploadForm(Resource):
         formulario.save_to_db()
 
         print('sucesso')
-        return 'sucesso'
+        return {'status': 'Imagem enviada com sucesso!'}
 
 
 
