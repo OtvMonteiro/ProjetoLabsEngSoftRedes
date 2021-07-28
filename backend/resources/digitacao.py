@@ -73,7 +73,7 @@ class DocumentoSendoDigitado:
             
             if formulario_model is None:
                 self.finaliza_digitacao()
-                return {'message': 'O município informado para esse formulário está errado.', 'erro': True}
+                self.valid = {'message': 'O município informado para esse formulário está errado.', 'erro': True}
 
             self.num_campos = formulario_model.numCampos
             
