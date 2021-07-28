@@ -27,7 +27,7 @@ class ImagensCarregadasModel(db.Model):
     
     @classmethod
     def query_available(cls) -> "ImagensCarregadasModel":
-        return cls.query.filter_by(digitado=0, id_digitador=None).first()
+        return cls.query.filter_by(digitado=False, id_digitador=None).first()
 
     @classmethod
     def find_by_id(cls, _id: int) -> "ImagensCarregadasModel":
