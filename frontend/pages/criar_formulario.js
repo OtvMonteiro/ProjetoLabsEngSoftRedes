@@ -68,7 +68,7 @@ function App() {
     // }
 
     let camposJSON = JSON.stringify(inputFields);
-    axios.post('http://192.168.15.101:5000/api/create_form', {
+    axios.post('http://localhost:5000/api/create_form', {
       'camposJSON': camposJSON,
       'nomeMunicipio': Cookies.get('nomeDoUsuario')
     }).then(response => {
@@ -93,7 +93,7 @@ function App() {
   const handleSubmitRecuperar = (e) => {
     e.preventDefault();
 
-    axios.post('http://192.168.15.101:5000/api/recover_form', {
+    axios.post('http://localhost:5000/api/recover_form', {
       'nomeMunicipio': Cookies.get('nomeDoUsuario')
     }).then(response => {
       //Create a Blob from the PDF Stream

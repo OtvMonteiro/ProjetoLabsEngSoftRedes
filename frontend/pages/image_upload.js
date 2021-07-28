@@ -15,7 +15,6 @@ export default function UploadImage() {
     const [stateStatus, setStateStatus] = useState({
       status: ''
     })
-    // let formdata = new FormData()
     
 
     const onSelectFile = event => {
@@ -23,32 +22,14 @@ export default function UploadImage() {
         console.log(event.target.files[0]);
         setstateUploadImage({selectedFile: event.target.files[0]})
         setStateStatus({status: ''})
-        // formdata.append('imagem', event.target.files)
     }
 
     const onUploadHandler = async event => {
-        // console.log("upload image files");
-        // console.log(stateUploadImage['selectedFile'])
         
         var formdata = new FormData();
         formdata.append('imagem', stateUploadImage['selectedFile']);
-        // formdata.append('cris', 'gistavo');
-        // console.log('asdasd')
-        // console.log(formdata);
 
-        // axios({
-        //     url: '/upload',
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json'
-        //     },
-        //     data: 'hello world'
-        // })
-        
-        // formdata.append("fileimage", imagefile.files[0]);
-        // const url=process.env.NEXT_PUBLIC_BASE_URL; console.log(url);
-        //axios.post('https://projetolabsengsoftredes-otvmonteiro.cloud.okteto.net/api/upload', formdata, {
-        axios.post('http://192.168.15.101:5000/api/carregar', formdata, {
+        axios.post('http://localhost:5000/api/carregar', formdata, {
         headers: {
         "Content-Type": `multipart/form-data; boundary=${formdata._boundary}`,
         }
@@ -74,7 +55,6 @@ export default function UploadImage() {
         <main>
           Selecione a imagem do formulário que deseja enviar:
           <br></br><br></br>
-        {/* <img id="uploadPreview" style="width: 100px; height: 100px;" src="/logo.jpg"/> */}
         <Image
         id='uploadPreview'
         className="flex"
@@ -83,9 +63,7 @@ export default function UploadImage() {
         width="256"
         height="256"
         /> 
-        {/* <input id="uploadImage" type="file" name="myPhoto" /> */}
         <div>
-            {/* <input className="w-full h-10 px-0 py-0 mb-6 font-bold text-white bg-blue-700 rounded hover:bg-blue-500" type="file" onChange={onSelectFile} multiple></input> */}
             <input
                 id='file_input'
                 className="w-full px-4 py-2 mb-6 font-bold text-white bg-green-700 rounded hover:bg-green-500"
@@ -104,11 +82,6 @@ export default function UploadImage() {
         </main>
       </div>
     </Layout>
-        // <form onSubmit={onUploadHandler} method="POST">
-        //     <label htmlFor="imageFiles"></label>            
-        //     <input type="file" onChange={onSelectFile} multiple></input>
-        //     <button type="submit" onClick={onUploadHandler}>Enviar</button>
-        // </form>
     )
 }
         
