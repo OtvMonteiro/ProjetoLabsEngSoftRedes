@@ -102,6 +102,7 @@ class DocumentoSendoDigitado:
             self.digitacao_terminada = True
             self.image_orm.update_digitado(True)
             documento_por_digitador.pop(self.nome_digitador)
+            self.envia_campos_digitados()
             return {'nomes_campos':self.nomes_campos, 'campos_digitados':self.campos_digitados, 'finalizada': True, 'nome_municipio':self.nome_municipio}
         else:
             return self.get_current_state()
@@ -116,7 +117,8 @@ class DocumentoSendoDigitado:
         for i in range(len(self.nomes_campos)):
             vacivida_api_dict[self.nomes_campos[i]] = self.campos_digitados[i]
 
-        print('Enviado ao Vacivida:', vacivida_api_dict)
+        vacivida_json = json.dumps(vacivida_api_dict)
+        print('Enviado ao Vacivida:', vacivida_json)
 
 
 def get_specific_campo_area(campo_area, campo_coord):
